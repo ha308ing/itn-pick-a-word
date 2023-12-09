@@ -1,7 +1,9 @@
 class Rules {
     result = [];
+    currentResult = [];
+    win = [];
 
-    findResults(moves, computerMove, playerMove, strings = {}) {
+    findResult(moves, computerMove, playerMove = "?", strings = {}) {
         // strings = { corner: "moves\\user", winString: "win", lostString: "lost", drawString: "draw"}
         const mid = computerMove;
         const length = moves.length;
@@ -19,38 +21,53 @@ class Rules {
                 k++;
             }
         }
-
-        const isFirstResult = Object.keys(this.result).length === 0;
-
         const result = moves.reduce((acc, v, i) => {
             const winString = strings?.winString ?? "WIN";
             const lostString = strings?.lostString ?? "LOST";
             const drawString = strings?.drawString ?? "DRAW";
-            if (win.includes(i)) {
-                acc[v] = isFirstResult
-                    ? [winString]
-                    : [...this.result[v], winString];
-            }
-            if (los.includes(i)) {
-                acc[v] = isFirstResult
-                    ? [lostString]
-                    : [...this.result[v], lostString];
-            }
-            if (dra.includes(i)) {
-                acc[v] = isFirstResult
-                    ? [drawString]
-                    : [...this.result[v], drawString];
-            }
+
+            if (win.includes(i)) acc[v] = [winString];
+            if (los.includes(i)) acc[v] = [lostString];
+            if (dra.includes(i)) acc[v] = [drawString];
+
             return acc;
         }, {});
 
         const cornerString = strings?.corner ?? "MOVES";
 
-        this.result = {
-            [cornerString]: isFirstResult
-                ? [playerMove]
-                : [...this.result[cornerString], playerMove],
+        const resultForTable = {
+            [cornerString]: [playerMove],
             ...result,
+        };
+        this.wins = win;
+        this.currentResult = { ...resultForTable };
+        return resultForTable;
+    }
+
+    findResults(moves, computerMove, playerMove, strings = {}) {
+        // strings = { corner: "moves\\user", winString: "win", lostString: "lost", drawString: "draw"}
+        const currentResult = this.findResult(
+            moves,
+            computerMove,
+            playerMove,
+            strings
+        );
+
+        const currentResultMerged = Object.entries(currentResult).reduce(
+            (acc, [move, res]) => {
+                return {
+                    ...acc,
+                    [move]:
+                        this.result[move] != null
+                            ? [...this.result[move], ...res]
+                            : res,
+                };
+            },
+            {}
+        );
+
+        this.result = {
+            ...currentResultMerged,
         };
 
         return this.result;

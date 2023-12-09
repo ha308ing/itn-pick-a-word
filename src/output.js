@@ -1,17 +1,18 @@
 const clc = require("cli-color");
+const Rules = require("./rules");
 
 class Output {
-    printResult(choice, computerMove, moves, winMoves) {
+    printResult(choice, computerChoice, moves) {
         let string =
             `\nYour move: ` +
             moves[choice] +
             `\nComputer move: ` +
-            moves[computerMove];
+            moves[computerChoice];
         const resultString =
             `\nIt's ` +
-            (choice === computerMove
+            (choice === computerChoice
                 ? `a draw!`
-                : winMoves.includes(choice)
+                : Rules.win.includes(choice)
                   ? `a win!`
                   : `a loss!`);
         console.log(string + resultString);

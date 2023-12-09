@@ -31,16 +31,6 @@ class Game {
             const hmac = Hmac.genHmac(moves[computerChoice], key);
             console.log("HMAC:", hmac);
 
-            const winMoves = Rules.getWinningMoves(moves, computerChoice);
-            let choice = Input.getChoice(moves, winMoves);
-            if (Input.checkExit(choice)) {
-                Output.printBye();
-                return 0;
-            }
-            choice = choice - 1;
-            const move = moves[choice];
-            Output.printResult(choice, computerChoice, moves, winMoves);
-
             const username = require("os").userInfo().username || "username";
             const strings = {
                 corner: `moves\\${username}`,
@@ -48,6 +38,18 @@ class Game {
                 lostString: "lost",
                 drawString: "draw",
             };
+
+            Rules.findResult(moves, computerChoice, undefined, strings);
+
+            let choice = Input.getChoice(moves);
+            if (Input.checkExit(choice)) {
+                Output.printBye();
+                return 0;
+            }
+            choice = choice - 1;
+            const move = moves[choice];
+            Output.printResult(choice, computerChoice, moves);
+
             const results = Rules.findResults(
                 moves,
                 computerChoice,

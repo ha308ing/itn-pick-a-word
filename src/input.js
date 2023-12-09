@@ -1,6 +1,8 @@
 const prompt = require("prompt-sync")({ sigint: true });
 const Errors = require("./errors");
 const Output = require("./output");
+const Rules = require("./rules");
+const Table = require("./table");
 
 class Input {
     getInput() {
@@ -28,16 +30,12 @@ class Input {
         return choice - 1 in moves || this.checkExit(choice);
     }
 
-    showHelp(moves, winMoves) {
+    showHelp() {
         console.log("Here's some help:");
-        console.log(
-            `Winning moves: ${winMoves
-                .map(i => `${moves[i]} (${i + 1})`)
-                .join(", ")}`
-        );
+        Table.printTable(Rules.currentResult);
     }
 
-    getChoice(moves, winMoves) {
+    getChoice(moves) {
         const choices = this.getChoices(moves);
         let choice = undefined;
         let i = 0;
@@ -45,7 +43,7 @@ class Input {
             if (i != 0) Output.printWrongChoice();
             console.log(choices);
             choice = prompt();
-            if (this.checkHelp(choice)) this.showHelp(moves, winMoves);
+            if (this.checkHelp(choice)) this.showHelp();
             i = 1;
         } while (!this.checkChoice(moves, choice));
         return choice;

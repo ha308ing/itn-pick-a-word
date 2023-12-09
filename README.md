@@ -1,6 +1,6 @@
 # a Game "Pick a word"
 
-[![625976.gif](https://i.postimg.cc/V5yDRzc5/625976.gif)](https://postimg.cc/ctmR1yCN)
+[![625982.gif](https://i.postimg.cc/GmQj20Sv/625982.gif)](https://postimg.cc/Snn9TP4K)
 
 ## How To Play
 
