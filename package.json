@@ -1,0 +1,30 @@
+{
+    "name": "pick-a-word",
+    "version": "1.0.0",
+    "description": "A game of picking words",
+    "main": "index.js",
+    "type": "commonjs",
+    "scripts": {
+        "start": "node main.js",
+        "start-empty": "node main.js",
+        "start-little": "node main.js Jalyn Dariana",
+        "start-even": "node main.js Jalyn Dariana Kali Dorian",
+        "start-repeat": "node main.js Jalyn Dariana Kali Dorian Kali",
+        "start-3": "node main.js Jalyn Dariana Alden",
+        "start-5": "node main.js  Mireya Wilma Kali Dorian Ramona",
+        "start-7": "node main.js  Ryder Emile Jeanne Nat Danika Hayley Bert",
+        "demo": "npm run start-empty; npm run start-little; npm run start-even; npm run start-repeat; npm run start-3; npm run start-5; npm run start-7",
+        "prettier": "prettier --check ./"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "ascii-table": "^0.0.9",
+        "cli-color": "^2.0.3",
+        "prompt-sync": "^4.2.0"
+    },
+    "devDependencies": {
+        "prettier": "^3.1.0"
+    }
+}
